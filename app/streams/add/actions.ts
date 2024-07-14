@@ -7,12 +7,12 @@ import { z } from "zod";
 
 const title = z.string();
 
-export async function strartStream(_: any, formData: FormData) {
+export async function startStream(_: any, formData: FormData) {
   const results = title.safeParse(formData.get("title"));
   if (!results.success) {
     return results.error.flatten();
   }
-  const response = await fetch(
+  const response = await fetch(    
     `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/stream/live_inputs`,
     {
       method: "POST",
@@ -27,9 +27,11 @@ export async function strartStream(_: any, formData: FormData) {
           mode: "automatic",
         },
       }),
-    },
+    }
   );
   const data = await response.json();
+  console.log(results);
+  console.log(data);
   const session = await getSession();
   const stream = await db.liveStream.create({
     data: {
