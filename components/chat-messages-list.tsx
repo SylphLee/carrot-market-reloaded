@@ -67,7 +67,7 @@ export default function ChatMessagesList({ initialMessages, userId, charRoomId, 
         <div key={message.id} className={`flex gap-2 items-start ${message.userId === userId ? "justify-end" : ""}`}>
           {message.userId === userId ? null : (
             <Image
-              src={message.user.avatar!}
+              src={message.user.avatar ? message.user.avatar : ""}
               alt={message.user.username}
               width={50}
               height={50}
